@@ -1,8 +1,10 @@
 package com.example.toastandsnackbar
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.toastandsnackbar.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
@@ -17,14 +19,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSnackbar.setOnClickListener {
-            val snackbar = Snackbar.make(binding.root, "dihapus", Snackbar.LENGTH_INDEFINITE)
-            snackbar.setAction("undo") {
-                Snackbar.make(binding.root, "berhasil dipulihkan", Snackbar.LENGTH_LONG).show()
+            val csToast = findViewById<LinearLayout>(R.id.ll_toast)
+            val layout = layoutInflater.inflate(R.layout.custom_toast, csToast)
+            val snackbar = Snackbar.make(binding.root, "Dingin", Snackbar.LENGTH_INDEFINITE)
+            snackbar.setActionTextColor(Color.BLUE)
+            snackbar.setTextColor(Color.BLACK)
+            snackbar.view.setBackgroundColor(Color.CYAN)
+            snackbar.setAction("pencet") {
+                with(Toast(applicationContext)) {
+                    duration = Toast.LENGTH_SHORT
+                    view = layout
+                    show()
+                }
             }.show()
         }
 
+
         binding.btnToast.setOnClickListener {
-            Toast.makeText(this, "it's Toast", Toast.LENGTH_SHORT).show()
+            showCustomToast()
+        }
+    }
+
+    private fun showCustomToast() {
+        val csToast = findViewById<LinearLayout>(R.id.ll_toast)
+        val layout = layoutInflater.inflate(R.layout.custom_toast, csToast)
+
+        with(Toast(applicationContext)) {
+            duration = Toast.LENGTH_SHORT
+            view = layout
+            show()
         }
     }
 }
